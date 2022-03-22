@@ -1,0 +1,38 @@
+.sidebar {
+    position: sticky;
+    left: 0;
+    width: 20rem;
+    min-height: 100vh;
+    background-color: #FFFBE9;
+
+    .title-bar {
+        width: 100%;
+        padding: 2rem 0 1rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #333;
+
+        img {
+            width: 3rem;
+            height: 3rem;
+            margin-right: 1rem;
+        }
+    }
+
+    .options {
+        display: flex;
+        flex-direction: column;
+        margin: 2rem 0;
+
+        a {
+            margin: 1rem 0;
+            padding: 0.5rem 0 0.5rem 2rem;
+            color: #555;
+            font-size: 1.3rem;
+            text-decoration: none;
+        }
+    }
+}
