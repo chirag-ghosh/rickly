@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Player, Team } from "../types";
+import { samplePlayers, sampleTeams } from "../utils/sampleData";
+import fuzzysort from "fuzzysort";
 
 type SearchContextType = {
     query: string;
@@ -18,6 +20,18 @@ export const SearchProvider: React.FC = ({children}: any) => {
     const [query, setQuery] = useState<string>("");
     const [teams, setTeams] = useState<Team[]>([]);
     const [players, setPlayers] = useState<Player[]>([]);
+
+    useEffect(() => {
+
+        if(query === "") {
+            setTeams(sampleTeams);
+            setPlayers(samplePlayers);
+        }
+        else {
+            setTeams(fuzzysort.go(query, sampleTeams, {key: 'name'}).map((item) => item.obj));
+            setPlayers(fuzzysort.go(query, samplePlayers, {key: 'name'}).map((item) => item.obj));
+        }
+    }, [query]);
 
     const value = {
         query,
