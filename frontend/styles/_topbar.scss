@@ -33,6 +33,40 @@
         right: 1.5rem;
         transform: translateY(-40%);
     }
+
+    .dropdown {
+        position: absolute;
+        top: 3.5rem;
+        background-color: #eaeaea;
+        padding: 2rem;
+        width: 70%;
+        border-radius: 10px;
+
+        &-label {
+            color: #666;
+        }
+
+        ul {
+            padding-left: 0;
+
+            div {
+                padding-left: 0.5rem;
+            }
+        }
+
+        li {
+            list-style: none;
+            margin: 0.5rem;
+            padding: 0.5rem 0.8rem;
+            width: fit-content;
+            cursor: pointer;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #cacaca;
+            }
+        }
+    }
 }
 
 .sign-in-status {
