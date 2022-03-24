@@ -12,3 +12,9 @@ export type Player = {
     team: string,
     category: 'batsman' | 'bowler' | 'allrounder'
 }
+
+export type QuickCardProps = {
+    title: string,
+    imgSrc: string,
+    link: string
+}

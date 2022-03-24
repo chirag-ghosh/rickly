@@ -1,0 +1,22 @@
+.quick-card {
+    position: relative;
+    filter: drop-shadow(0.4rem 0.6rem 0.8rem rgba(#000, 0.1));
+
+    img {
+        width: 20rem;
+        border-radius: 10px;
+    }
+
+    &-title {
+        position: absolute;
+        bottom: 2rem;
+        width: 100%;
+        text-align: center;
+        color: #0a0a0a;
+        font-weight: 500;
+        font-size: 1.8rem;
+        background-color: rgba(#FFB72B, 0.5);
+        backdrop-filter: blur(6px);
+        padding: 0.5rem 0;
+    }
+}
