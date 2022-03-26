@@ -1,10 +1,33 @@
 import { useRouter } from "next/router"
+import React from "react";
+import Table from "../../components/table";
 import { getTeamFromID } from "../../utils/helpers";
+import { samplePlayers } from "../../utils/sampleData";
 
 const Team = () => {
 
     const router = useRouter();
     const team = getTeamFromID(router.query.id);
+
+    const data = React.useMemo(() => [...samplePlayers.filter((player) => player.team === team?.name)], []);
+    const columns = React.useMemo(() => [
+        {
+            Header: 'Name',
+            accessor: 'name'
+        },
+        {
+            Header: 'Age',
+            accessor: 'age',
+        },
+        {
+            Header: 'Gender',
+            accessor: 'gender',
+        },
+        {
+            Header: 'Category',
+            accessor: 'category'
+        }
+    ], []);
 
     return(
         <div className="teams-page">{
@@ -27,6 +50,10 @@ const Team = () => {
                             <h2>Coach</h2>
                             <div>{team.coach}</div>
                         </div>
+                    </div>
+                    <div className="team-players">
+                        <h2>Players</h2>
+                        <Table data={data} columns={columns} />
                     </div>
                 </div>
             )

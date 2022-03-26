@@ -9,7 +9,7 @@ samplePlayers.push({
     age: 96,
     gender: 'male',
     category: 'batsman',
-    team: 'retards'
+    team: 'Retards'
 })
 samplePlayers.push({
     uuid: "b144c2e1-1da5-4aa6-82b3-4c33980c01f6",
@@ -17,7 +17,7 @@ samplePlayers.push({
     age: 69,
     gender: 'male',
     category: 'bowler',
-    team: 'retards'
+    team: 'Retards'
 })
 samplePlayers.push({
     uuid: "b932504b-553a-4204-9c6e-4fab05d9e5df",
