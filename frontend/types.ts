@@ -3,6 +3,7 @@ export type Team = {
     name: string,
     captain: string,
     wicketKeeper: string,
+    coach: string,
     playersList: string[]
 }
 

@@ -33,6 +33,7 @@ sampleTeams.push({
     name: "AGB",
     captain: 'Anubhav Dhar',
     wicketKeeper: 'Anubhav Dhar',
+    coach: 'Shah Dhruv Rajendrabhai',
     playersList: ['Anubhav Dhar']
 })
 sampleTeams.push({
@@ -40,5 +41,6 @@ sampleTeams.push({
     name: "Retards",
     captain: 'Aritra Mitra',
     wicketKeeper: 'Devendra Palod',
+    coach: 'Subhu Halder',
     playersList: ['Aritra Mitra', 'Devendra Palod']
 })
