@@ -1,4 +1,5 @@
 export type Team = {
+    uuid: string,
     name: string,
     captain: string,
     wicketKeeper: string,
@@ -6,6 +7,7 @@ export type Team = {
 }
 
 export type Player = {
+    uuid: string,
     name: string,
     age: number,
     gender: 'male' | 'female' | 'others',
