@@ -2,15 +2,18 @@ import React from 'react';
 import { NextComponentType } from "next";
 import { useSearchContext } from '../hooks/useSearchContext';
 import { Search as SearchIcon } from "react-feather";
+import { useRouter } from 'next/router';
 
 const Search: NextComponentType = () => {
 
     const { query, setQuery, teams, players} = useSearchContext();
 
-    const searchClickHandler = (type: 'team' | 'player', item: string) => {
+    const router = useRouter();
+
+    const searchClickHandler = (type: 'team' | 'player', id: string) => {
         setQuery("");
-        console.log(item);
-        //move to corresponding section
+        if(type === 'team') router.push(`/team/${id}`);
+        else router.push(`/player/${id}`);
     }
 
     return(
@@ -28,7 +31,7 @@ const Search: NextComponentType = () => {
                     <ul>
                         {teams.map((team, index) => {
                             return(
-                                <li key={index} onClick={() => searchClickHandler('team', team.name)}>{team.name}</li>
+                                <li key={index} onClick={() => searchClickHandler('team', team.uuid)}>{team.name}</li>
                             )
                         })}
                         {teams.length === 0 && (
@@ -39,7 +42,7 @@ const Search: NextComponentType = () => {
                     <ul>
                         {players.map((player, index) => {
                             return(
-                                <li key={index} onClick={() => searchClickHandler('player', player.name)}>{player.name}</li>
+                                <li key={index} onClick={() => searchClickHandler('player', player.uuid)}>{player.name}</li>
                             )
                         })}
                         {players.length === 0 && (
