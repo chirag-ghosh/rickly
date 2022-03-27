@@ -12,3 +12,77 @@
         cursor: pointer;
     }
 }
+
+.player-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #333;
+
+        span {
+            font-size: 2rem;
+            font-weight: 500;
+        }
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .player-highlight-list {
+
+        width: 100%;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .player-highlight {
+            min-width: 20rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15),
+                        0 10px 10px rgba(0, 0, 0, 0.12);
+    
+            h2 {
+                margin: 0.5rem;
+                color: inherit;
+            }
+    
+            div {
+                margin: 0.5rem;
+                font-size: 1.3rem;
+            }
+        }
+
+        & .red {
+            background-color: rgba(#FC4F4F, 0.15);
+            color: #FC4F4F;
+        }
+
+        & .green {
+            background-color: rgba(#06FF00, 0.15);
+            color: #125C13;
+        }
+
+        & .blue {
+            background-color: rgba(#0E3EDA, 0.15);
+            color: #0E3EDA;
+        }
+    }
+}
