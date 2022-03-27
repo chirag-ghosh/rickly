@@ -26,9 +26,25 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+
+        & .red {
+            background-color: rgba(#FC4F4F, 0.15);
+            color: #FC4F4F;
+        }
+
+        & .green {
+            background-color: rgba(#06FF00, 0.15);
+            color: #125C13;
+        }
+
+        & .blue {
+            background-color: rgba(#0E3EDA, 0.15);
+            color: #0E3EDA;
+        }
     }
 
     .team-highlight {
+        min-width: 20rem;
         background-color: #eaeaea;
         padding: 1rem 1.5rem;
         display: flex;
@@ -36,14 +52,18 @@
         align-items: center;
         justify-content: space-around;
         border-radius: 10px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15),
+                    0 8px 8px rgba(0, 0, 0, 0.12);
 
         h2 {
             margin: 0.5rem;
+            color: inherit;
         }
 
         div {
             margin: 0.5rem;
             font-size: 1.3rem;
+            font-weight: 500;
         }
     }
 
