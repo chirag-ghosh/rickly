@@ -87,3 +87,65 @@
         }
     }
 }
+
+.new-player-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .division {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 60vh;
+    }
+
+    .divided-block {
+        width: 45%;
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        input {
+            width: 90%;
+            outline: none;
+            border: 1px solid #ccc;
+            font-size: 1.5rem;
+            padding: 0.8rem;
+            border-radius: 5px;
+
+            &:hover, &:focus {
+                outline: 2px solid blue;
+            }
+        }
+
+        button {
+            width: 90%;
+            outline: none;
+            border: none;
+            font-size: 1.5rem;
+            padding: 1rem 1.5rem;
+            background-color: #FFB72B;
+            color: #333;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .input-select {
+            width: 90%;
+            margin: 0;
+            outline: none;
+            border: none;
+            font-size: 1.5rem;
+        }
+    }
+
+    .divider {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+}
