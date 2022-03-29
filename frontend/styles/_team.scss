@@ -90,3 +90,71 @@
         cursor: pointer;
     }
 }
+
+.new-team-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .division {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 60vh;
+    }
+
+    .divided-block {
+        width: 45%;
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &:last-child {
+            border-left: 2px dotted #333;
+            transform: translateX(-4.5rem);
+            padding-left: 4.5rem;
+        }
+
+        input {
+            width: 90%;
+            outline: none;
+            border: 1px solid #ccc;
+            font-size: 1.5rem;
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin-bottom: 5rem;
+
+            &:hover, &:focus {
+                outline: 2px solid blue;
+            }
+        }
+
+        button {
+            width: 90%;
+            outline: none;
+            border: none;
+            font-size: 1.5rem;
+            padding: 1rem 1.5rem;
+            background-color: #FFB72B;
+            color: #333;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+    }
+
+    .divider {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background-color: #fafafa;
+        z-index: 2;
+    }
+}
