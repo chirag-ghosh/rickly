@@ -38,6 +38,8 @@ const PlayOptions: Option[] = [
 
 const NewPlayer = () => {
 
+    const [name, setName] = useState<string>('');
+    const [phone, setPhone] = useState<number>();
     const [gender, setGender] = useState<Option>(GenderOptions[0]);
     const [category, setCategory] = useState<Option>(PlayOptions[0]);
 
@@ -52,8 +54,8 @@ const NewPlayer = () => {
                     OR
                 </div>
                 <div className="divided-block">
-                    <input type='text' placeholder="Enter player name"></input>
-                    <input type='number' placeholder="Enter player age"></input>
+                    <input type='text' placeholder="Enter player name" onChange={(event) => setName(event.target.value)}></input>
+                    <input type='number' placeholder="Enter player age" onChange={(event) => setPhone(parseInt(event.target.value))}></input>
                     <Select
                         className="input-select" 
                         options={GenderOptions}
