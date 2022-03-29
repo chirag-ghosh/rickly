@@ -1,5 +1,5 @@
-import { Player, Team } from "../types";
-import { samplePlayers, sampleTeams } from "./sampleData";
+import { Player, Team, Tournament } from "../types";
+import { samplePlayers, sampleTeams, sampleTournaments } from "./sampleData";
 
 export const getTeamFromID = (id: string | string[] | undefined): Team | null => {
 
@@ -17,6 +17,16 @@ export const getPlayerFromID = (id: string | string[] | undefined): Player | nul
     const playerList = samplePlayers;
     for(var i = 0; i < playerList.length; i++) {
         if(playerList[i].uuid === id) return playerList[i];
+    }
+    return null;
+}
+
+export const getTournamentFromID = (id: string | string[] | undefined): Tournament | null => {
+
+    if(id === undefined) return null;
+    const tournamentList = sampleTournaments;
+    for(var i = 0; i < tournamentList.length; i++) {
+        if(tournamentList[i].uuid === id) return tournamentList[i];
     }
     return null;
 }

@@ -9,7 +9,7 @@ const Home: NextPage = () => {
         <div className='card-wrapper'>
           <QuickCard title='Add Player' link='/player/new' imgSrc='/player.jpg' />
           <QuickCard title='Create Team' link='/team/new' imgSrc='/team.jpg' />
-          <QuickCard title='Play Tournament' link='/tournament/new' imgSrc='/tournament.jpg' />
+          <QuickCard title='Play Tournament' link='/tournament' imgSrc='/tournament.jpg' />
         </div>
       </div>
     </div>

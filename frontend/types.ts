@@ -29,3 +29,12 @@ export type Tournament = {
     scheduled: boolean,
     completed: boolean
 }
+
+export type Match = {
+    uuid: string,
+    tournament: string,
+    teamA: string,
+    teamB: string,
+    date: string,
+    winner?: string
+}

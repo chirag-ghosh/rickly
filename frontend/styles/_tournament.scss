@@ -99,3 +99,17 @@
         }
     }
 }
+
+.tournament {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-matches {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
