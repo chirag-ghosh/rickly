@@ -48,11 +48,11 @@ const Team = () => {
                     <div className="team-top-bar">
                         <div className="team-highlight red">
                             <h2>Captain</h2>
-                            <div>{team.captain}</div>
+                            <div>{team.captain_name}</div>
                         </div>
                         <div className="team-highlight green">
                             <h2>Wicket Keeper</h2>
-                            <div>{team.wicketKeeper}</div>
+                            <div>{team.wicketkeeper_name}</div>
                         </div>
                     </div>
                     <div className="team-players">

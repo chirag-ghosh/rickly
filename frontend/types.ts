@@ -1,8 +1,8 @@
 export type Team = {
     id: string,
     name: string,
-    captain: string,
-    wicketKeeper: string,
+    captain_name: string,
+    wicketkeeper_name: string,
     coach: string,
     playersList: string[]
 }

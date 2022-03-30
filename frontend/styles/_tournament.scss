@@ -107,7 +107,7 @@
     align-items: center;
 
     .button {
-        width: 90%;
+        width: 50%;
         outline: none;
         border: none;
         font-size: 1.5rem;
@@ -116,6 +116,7 @@
         color: #333;
         border-radius: 10px;
         font-weight: 600;
+        margin-bottom: 2rem;
     }
 
     &-matches {
