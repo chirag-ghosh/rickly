@@ -173,7 +173,7 @@ class Match(models.Model):
                                 fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                             else:
                                 fielder = L.playerinline_set.create(player = x[random.randint(0,len(x)-1)])
-                L.save()
+                    L.save()
             elif(win > 22):
                 self.result = True
                 win = True
@@ -228,7 +228,7 @@ class Match(models.Model):
                                 fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                             else:
                                 fielder = L.playerinline_set.create(player = x[random.randint(0,len(x)-1)])
-                L.save()
+                    L.save()
             else:
                 self.result = False
                 win = False
@@ -291,7 +291,7 @@ class Match(models.Model):
                             else:
                                 fielder = L.playerinline_set.create(player = x[random.randint(0,len(x)-1)])
                             fielder.save()
-                L.save()
+                    L.save()
             bt.team.save()
             wt.team.save()
             self.generated = True
