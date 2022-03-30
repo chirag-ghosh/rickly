@@ -69,12 +69,12 @@ class TeamSerializer(serializers.ModelSerializer):
         if(str(validated_data.get('name')) != "None"):
             instance.name = validated_data.get('name')
         else:
-            instance.name = 'Idle Teams'
+            pass
         instance.save()
         if(str(validated_data.get('tournament')) != "None"):
             instance.tournament = validated_data.get('tournament')
         else:
-            instance.tournament = 'Idle Teams'
+            pass
         instance.save()
         return instance
 
@@ -95,15 +95,15 @@ class PlayerSerializer(serializers.ModelSerializer):
         if(str(validated_data.get('team')) != "None"):
             T.team = validated_data.get('team')
         else:
-            T.team = 'Uncapped'
+            pass
         if(str(validated_data.get('bat')) != "None"):
             T.bathandedness = str(validated_data.get('bat'))
         else:
-            T.bathandedness = 'right'
+            pass
         if(str(validated_data.get('ball')) != "None"):
             T.ballhandedness = validated_data.get('ball')
         else:
-            T.ballhandedness = 'right'
+            pass
         T.save()
         if(str(validated_data.get('specs')) != "None"):
             T.specifics = validated_data.get('specs')
