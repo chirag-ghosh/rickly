@@ -16,5 +16,5 @@ urlpatterns = [
     path('players/<int:id>/',views.PlayerView.as_view()),
     path('matches/',views.MatchView.as_view()),
     path('matches/<int:id>/',views.MatchView.as_view()),
-    
+    path('tournaments/<int:id>/stats/',views.StatView.as_view()),
 ]

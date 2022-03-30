@@ -75,6 +75,7 @@ class TeamSerializer(serializers.ModelSerializer):
             'id',
             'tournament',
             'name',
+            'player_set',
         ]
 class PlayerSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
@@ -119,7 +120,13 @@ class PlayerSerializer(serializers.ModelSerializer):
             'bathandedness',
             'ballhandedness',
             'specifics',
-            'role'
+            'role',
+            '_1Ccount',
+            '_5wcount',
+            'runcount',
+            'wickount',
+            'catcount',
+            '_50count',
         )
 class MatchSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
@@ -133,4 +140,25 @@ class MatchSerializer(serializers.ModelSerializer):
             'id',
             'winner',
             'tournament',
+            'scoreline_set',
+            'playing11_set',
+        )
+class StatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Player
+        fields = (
+            'id',
+            'name',
+            'age',
+            'team',
+            'bathandedness',
+            'ballhandedness',
+            'specifics',
+            'role',
+            '_1Ccount',
+            '_5wcount',
+            'runcount',
+            'wickount',
+            'catcount',
+            '_50count',
         )
