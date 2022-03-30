@@ -52,7 +52,7 @@ const NewPlayer = () => {
     const [category, setCategory] = useState<Option>(PlayOptions[0]);
 
     const generateRandomPlayer = () => {
-        axios.post(`${BACKEND_URL}/players`)
+        axios.post(`${BACKEND_URL}/players/`)
             .then((response) => {
                 router.replace('/player')
             })
@@ -60,7 +60,7 @@ const NewPlayer = () => {
     }
 
     const generateManualPlayer = () => {
-        axios.post(`${BACKEND_URL}/players`, {
+        axios.post(`${BACKEND_URL}/players/`, {
             name: name,
             age: phone,
             role: category.value
@@ -75,12 +75,12 @@ const NewPlayer = () => {
         <div className="new-player-page">
             <h1>Create a new player here</h1>
             <div className="division">
-                <div className="divided-block">
+                {/* <div className="divided-block">
                     <button onClick={() => generateRandomPlayer()}>Generate a random player</button>
                 </div>
                 <div className="divider">
                     OR
-                </div>
+                </div> */}
                 <div className="divided-block">
                     <input type='text' placeholder="Enter player name" onChange={(event) => setName(event.target.value)}></input>
                     <input type='number' placeholder="Enter player age" onChange={(event) => setPhone(parseInt(event.target.value))}></input>

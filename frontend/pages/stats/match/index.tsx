@@ -1,46 +1,55 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../../components/table";
+import { useSearchContext } from "../../../hooks/useSearchContext";
 import { Match } from "../../../types";
+import { BACKEND_URL } from "../../../utils/constants";
+import { getTournamentFromID } from "../../../utils/helpers";
 
 const Match = () => {
 
     const router = useRouter();
+    const {tournamentList} = useSearchContext();
 
     const [matchList, setMatchList] = useState<Match[]>([]);
 
-    // useEffect(() => {
-    //     setMatchList(sampleMatches);
-    // }, []);
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/matches`)
+            .then((response) => setMatchList(response.data))
+            .catch((err) => console.log(err));
+    }, []);
 
     const data = useMemo(() => [...matchList], [matchList])
 
     const columns = useMemo(() => [
         {
             Header: 'Date',
-            accessor: 'date'
+            accessor: 'date',
+            Cell: ({ cell }: { cell: { value: any } }) => <div>{(new Date(cell.value)).toDateString()}</div>
         },
         {
             Header: 'Tournament',
-            accessor: 'tournament'
+            accessor: 'tournament',
+            Cell: ({ cell }: { cell: { value: any } }) => <div>{getTournamentFromID(cell.value, tournamentList)?.name}</div>
         },
         {
             Header: 'Team A',
-            accessor: 'teamA',
+            accessor: 'team_names[0]',
         },
         {
             Header: 'Team B',
-            accessor: 'teamB',
+            accessor: 'team_names[1]',
         },
         {
             Header: 'Winner',
             accessor: 'winner',
-            Cell: ({ cell }: { cell: { value: any } }) => <div>{cell.value === undefined ? '-' : cell.value}</div>
+            
         },
         {
             Header: 'Stats',
             accessor: 'id',
-            Cell: ({ cell }: { cell: { value: any } }) => <button onClick={() => router.push(`/stats/match/${cell.value}`)}>Open Stats</button>
+            Cell: ({ cell }: { cell: { value: any } }) => <button onClick={() => router.push(`stats/match/${cell.value}`)}>Open Stats</button>
         }
     ], [matchList]);
 
