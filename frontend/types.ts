@@ -21,3 +21,20 @@ export type QuickCardProps = {
     imgSrc: string,
     link: string
 }
+
+export type Tournament = {
+    uuid: string,
+    name: string,
+    matchCount: number,
+    scheduled: boolean,
+    completed: boolean
+}
+
+export type Match = {
+    uuid: string,
+    tournament: string,
+    teamA: string,
+    teamB: string,
+    date: string,
+    winner?: string
+}

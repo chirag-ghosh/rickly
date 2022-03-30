@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSearchContext } from "../../hooks/useSearchContext";
-import { Player, Team } from "../../types";
-import { sampleTeams } from "../../utils/sampleData";
+import { useSearchContext } from "../../../hooks/useSearchContext";
+import { Player, Team } from "../../../types";
+import { sampleTeams } from "../../../utils/sampleData";
 
 const Player: NextPage = () => {
 
@@ -23,7 +23,7 @@ const Player: NextPage = () => {
                 {
                     playersList.map((player) => {
                         return(
-                            <div onClick={() => router.push(`player/${player.uuid}`)} className="player">{player.name}</div>
+                            <div onClick={() => router.push(`/stats/player/${player.uuid}`)} className="player">{player.name}</div>
                         )
                     })
                 }
