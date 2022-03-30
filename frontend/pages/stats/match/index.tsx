@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../../components/table";
 import { Match } from "../../../types";
-import { sampleMatches } from "../../../utils/sampleData";
 
 const Match = () => {
 
@@ -10,9 +9,9 @@ const Match = () => {
 
     const [matchList, setMatchList] = useState<Match[]>([]);
 
-    useEffect(() => {
-        setMatchList(sampleMatches);
-    }, []);
+    // useEffect(() => {
+    //     setMatchList(sampleMatches);
+    // }, []);
 
     const data = useMemo(() => [...matchList], [matchList])
 

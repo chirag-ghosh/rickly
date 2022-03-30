@@ -3,7 +3,6 @@ import React from "react";
 import Table from "../../components/table";
 import { useSearchContext } from "../../hooks/useSearchContext";
 import { getTeamFromID } from "../../utils/helpers";
-import { samplePlayers } from "../../utils/sampleData";
 
 const Team = () => {
 

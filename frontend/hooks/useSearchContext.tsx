@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Player, Team, Tournament } from "../types";
-import { samplePlayers, sampleTeams } from "../utils/sampleData";
 import fuzzysort from "fuzzysort";
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useSearchContext } from "../../hooks/useSearchContext";
 import { Tournament } from "../../types";
 import { BACKEND_URL } from "../../utils/constants";
-import { sampleTournaments } from "../../utils/sampleData";
 
 const Tournament: NextPage = () => {
 

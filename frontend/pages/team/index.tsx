@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSearchContext } from "../../hooks/useSearchContext";
 import { Team } from "../../types";
-import { sampleTeams } from "../../utils/sampleData";
 
 const Team: NextPage = () => {
 

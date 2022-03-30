@@ -6,7 +6,6 @@ import { useSearchContext } from "../../hooks/useSearchContext";
 import { Match } from "../../types";
 import { BACKEND_URL } from "../../utils/constants";
 import { getTournamentFromID } from "../../utils/helpers";
-import { sampleMatches } from "../../utils/sampleData";
 
 const Tournament = () => {
 
@@ -18,15 +17,8 @@ const Tournament = () => {
 
     useEffect(() => {
 
-        setMatches(sampleMatches.filter((match) => {
-            return match.tournament === tournament?.name
-        }))
-    }, []);
-
-    useEffect(() => {
-
         axios.get(`${BACKEND_URL}/matches`)
-            .then((response) => setMatches(response.data.filter((match: Match) => {
+            .then((response) => setMatches(response.data.filter((match: any) => {
                 if(match.result) {
                     match.winner = match.winner ? match.team_names[1] : match.team_names[0]
                 }
