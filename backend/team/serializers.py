@@ -9,7 +9,7 @@ class TournamentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
     # Once the request data has been validated, we can create a todo item instance in the database
         T = Tournament.objects.create(name=validated_data.get('name'))
-        for team in Team.objects.get():
+        for team in Team.objects.all():
             if team.name != 'Uncapped':
                 team.Tournament = T
         return T
