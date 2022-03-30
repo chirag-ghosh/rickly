@@ -75,6 +75,7 @@ class TeamSerializer(serializers.ModelSerializer):
             'id',
             'tournament',
             'name',
+            'player_set',
         ]
 class PlayerSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
@@ -133,4 +134,6 @@ class MatchSerializer(serializers.ModelSerializer):
             'id',
             'winner',
             'tournament',
+            'scoreline_set',
+            'playing11_set'
         )
