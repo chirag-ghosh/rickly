@@ -10,7 +10,7 @@ class TournamentSerializer(serializers.ModelSerializer):
         T = Tournament.objects.create(name=validated_data.get('name'))
         for team in Team.objects.all():
             if team.name != 'Uncapped':
-                self.team_set.add(team)
+                T.team_set.add(team)
                 team.save()
         return T
     def post(self, instance, data):
@@ -120,7 +120,13 @@ class PlayerSerializer(serializers.ModelSerializer):
             'bathandedness',
             'ballhandedness',
             'specifics',
-            'role'
+            'role',
+            '_1Ccount',
+            '_5wcount',
+            'runcount',
+            'wickount',
+            'catcount',
+            '_50count',
         )
 class MatchSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
@@ -135,5 +141,24 @@ class MatchSerializer(serializers.ModelSerializer):
             'winner',
             'tournament',
             'scoreline_set',
-            'playing11_set'
+            'playing11_set',
+        )
+class StatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Player
+        fields = (
+            'id',
+            'name',
+            'age',
+            'team',
+            'bathandedness',
+            'ballhandedness',
+            'specifics',
+            'role',
+            '_1Ccount',
+            '_5wcount',
+            'runcount',
+            'wickount',
+            'catcount',
+            '_50count',
         )
