@@ -9,12 +9,12 @@ const Team: NextPage = () => {
 
     const [teamsList, setTeamsList] = useState<Team[]>([]);
 
-    const {teams} = useSearchContext();
+    const {teamList} = useSearchContext();
     const router = useRouter();
 
     useEffect(() => {
-        setTeamsList([...teams, ...teams, ...teams, ...teams, ...teams, ...teams, ...teams, ...teams])
-    })
+        setTeamsList([...teamList])
+    }, [teamList])
 
     return(
         <div className="teams-page">
