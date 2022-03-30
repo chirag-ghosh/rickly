@@ -41,7 +41,7 @@ const Tournament = () => {
         },
         {
             Header: 'Stats',
-            accessor: 'uuid',
+            accessor: 'id',
             Cell: ({ cell }: { cell: { value: any } }) => <button onClick={() => router.push(`stats/match/${cell.value}`)}>Open Stats</button>
         }
     ], []);

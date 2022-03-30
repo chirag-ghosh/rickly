@@ -46,7 +46,7 @@ const Tournament: NextPage = () => {
                     {
                         tournamentList.map((tournament) => {
                             return(
-                                <div onClick={() => router.push(`tournament/${tournament.uuid}`)}>{tournament.name}</div>
+                                <div onClick={() => router.push(`tournament/${tournament.id}`)}>{tournament.name}</div>
                             )
                         })
                     }

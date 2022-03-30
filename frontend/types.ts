@@ -1,5 +1,5 @@
 export type Team = {
-    uuid: string,
+    id: string,
     name: string,
     captain: string,
     wicketKeeper: string,
@@ -8,7 +8,7 @@ export type Team = {
 }
 
 export type Player = {
-    uuid: string,
+    id: string,
     name: string,
     age: number,
     gender: 'male' | 'female' | 'others',
@@ -23,15 +23,15 @@ export type QuickCardProps = {
 }
 
 export type Tournament = {
-    uuid: string,
+    id: string,
     name: string,
-    matchCount: number,
+    match_num: number,
     scheduled: boolean,
     completed: boolean
 }
 
 export type Match = {
-    uuid: string,
+    id: string,
     tournament: string,
     teamA: string,
     teamB: string,

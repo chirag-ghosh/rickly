@@ -31,7 +31,7 @@ const Search: NextComponentType = () => {
                     <ul>
                         {teams.map((team, index) => {
                             return(
-                                <li key={index} onClick={() => searchClickHandler('team', team.uuid)}>{team.name}</li>
+                                <li key={index} onClick={() => searchClickHandler('team', team.id)}>{team.name}</li>
                             )
                         })}
                         {teams.length === 0 && (
@@ -42,7 +42,7 @@ const Search: NextComponentType = () => {
                     <ul>
                         {players.map((player, index) => {
                             return(
-                                <li key={index} onClick={() => searchClickHandler('player', player.uuid)}>{player.name}</li>
+                                <li key={index} onClick={() => searchClickHandler('player', player.id)}>{player.name}</li>
                             )
                         })}
                         {players.length === 0 && (

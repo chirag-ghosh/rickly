@@ -23,7 +23,7 @@ const Player: NextPage = () => {
                 {
                     playersList.map((player) => {
                         return(
-                            <div onClick={() => router.push(`player/${player.uuid}`)} className="player">{player.name}</div>
+                            <div onClick={() => router.push(`player/${player.id}`)} className="player">{player.name}</div>
                         )
                     })
                 }
