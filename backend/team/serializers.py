@@ -42,6 +42,12 @@ class TournamentSerializer(serializers.ModelSerializer):
         )
 class TeamSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
+    captain_name = serializers.SerializerMethodField('capname')
+    wicketkeeper_name = serializers.SerializerMethodField('wicname')
+    def capname(self, instance):
+        return instance.player_set.all()[instance.captain].name
+    def wicname(self, instance):
+        return instance.player_set.all()[instance.wicketkeeper].name
     def create(self, validated_data):
         T = Team.objects.create(name=validated_data.get('name'))
         if(str(validated_data.get('tournament')) != "None"):
