@@ -89,6 +89,9 @@ class TeamSerializer(serializers.ModelSerializer):
             'player_set',
             'captain_name',
             'wicketkeeper_name',
+            'win',
+            'loss',
+            'DNR',
         ]
 class PlayerSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
