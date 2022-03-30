@@ -158,10 +158,7 @@ class MatchSerializer(serializers.ModelSerializer):
                 for k in j.playerinline_set.all():
                     S.append((k.player.name,k.role))
                 M.append(S)
-                M.append(j.run)
-                M.append(j.ballfaced)
-                M.append(j.out)
-                M.append(j.outdesc)
+                M.append([j.run, j.ballfaced, j.out, j.outdesc])
             L.append(M)
         return L
     def update(self, instance):
