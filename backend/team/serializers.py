@@ -1,6 +1,6 @@
 from rest_framework import serializers
-
-from .models import Tournament, Team, Player, Match
+import random
+from .models import Scoreline, Tournament, Team, Player, Match
 
 
 class TournamentSerializer(serializers.ModelSerializer):
@@ -44,28 +44,31 @@ class TeamSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
     def create(self, validated_data):
         T = Team.objects.create(name=validated_data.get('name'))
-        try:
+        if(str(validated_data.get('tournament')) != "None"):
             T.tournament = validated_data.get('tournament')
-            if(not len(T)):
-                T.tournament = 'Idle Teams'
-        except:
-            pass
+        else:
+            T.tournament = 'Idle Teams'
+        U = Team.objects.all().filter(name='Uncapped')
+        if U.player_set.count < 11:
+            return
+        else:
+            for i in range(11):
+                U.player_set.all()[0].team = T
+                U.player_set.all()[0].save()
+        T.captain = random.randint(0,10)
+        T.wicketkeeper = random.randint(0,10)
         T.save()
         return T
     def update(self, instance, validated_data):
-        try:
-            X = validated_data.get('name')
-            if(len(X)):
-                instance.name = X
-        except:
-            pass
-        try:
-            N = validated_data.get('tournament')
-            if(len(N)):
-                instance.tournament = N
-        except:
-            N = instance.tournament
-        instance.tournament = N
+        if(str(validated_data.get('name')) != "None"):
+            instance.name = validated_data.get('name')
+        else:
+            instance.name = 'Idle Teams'
+        instance.save()
+        if(str(validated_data.get('tournament')) != "None"):
+            instance.tournament = validated_data.get('tournament')
+        else:
+            instance.tournament = 'Idle Teams'
         instance.save()
         return instance
 
@@ -76,6 +79,8 @@ class TeamSerializer(serializers.ModelSerializer):
             'tournament',
             'name',
             'player_set',
+            'captain_name',
+            'wicketkeeper_name',
         ]
 class PlayerSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
@@ -129,7 +134,16 @@ class PlayerSerializer(serializers.ModelSerializer):
             '_50count',
         )
 class MatchSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=100, required=True)
+    team_names = serializers.SerializerMethodField('team_name')
+    #scoreline_set = serializers.SerializerMethodField('scorer')
+    def team_name(self, instance):
+        L = []
+        for i in instance.playing11_set.all():
+            L.append(i.team.name)
+        return L
+    '''def scorer(self, instance):
+        L = [i.scoreline_set.all() for i in instance.playing11_set.all()]
+        return L'''
     def update(self, instance):
         instance.generate()
         instance.save()
@@ -138,11 +152,23 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = (
             'id',
+            'date',
             'winner',
             'tournament',
-            'scoreline_set',
+            #'scoreline_set',
             'playing11_set',
+            'team_names',
         )
+'''class ScorelineSerializer(serializers.ModelSerializer):
+    players_in_line = serializers.SerializerMethodField('pil')
+    def pil(self, instance):
+        L = [(i.player,i.role) for i in instance.player_in_line.all()]
+    class Meta:
+        model = Scoreline
+        fields = (
+            'id',
+            'players_in_line',
+        )'''
 class StatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
