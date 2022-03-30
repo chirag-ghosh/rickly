@@ -1,20 +1,23 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSearchContext } from "../../hooks/useSearchContext";
 import { Tournament } from "../../types";
 import { sampleTournaments } from "../../utils/sampleData";
 
 const Tournament: NextPage = () => {
 
+    const { tournamentList } = useSearchContext();
+
     const [newTournamentName, setNewTournamentName] = useState<string>('');
     const [mode, setMode] = useState<('unscheduled' | 'scheduled' | 'completed')>('unscheduled');
-    const [tournamentList, setTournamentList] = useState<Tournament[]>([]);
+    const [tournaments, setTournaments] = useState<Tournament[]>([]);
 
     const router = useRouter();
 
     useEffect(() => {
 
-        setTournamentList(sampleTournaments.filter((tournament) => {
+        setTournaments(tournamentList.filter((tournament) => {
             if(mode === 'unscheduled')
                 return !tournament.scheduled;
             else if(mode === 'scheduled')
@@ -44,7 +47,7 @@ const Tournament: NextPage = () => {
                 </div>
                 <div className="tournament-list">
                     {
-                        tournamentList.map((tournament) => {
+                        tournaments.map((tournament) => {
                             return(
                                 <div onClick={() => router.push(`tournament/${tournament.id}`)}>{tournament.name}</div>
                             )
