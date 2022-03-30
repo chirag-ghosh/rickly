@@ -110,6 +110,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
 
+CSRF_TRUSTED_ORIGINS=['https://*.chiragghosh.me', 'http://localhost:8000', 'http://localhost:3000']
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
