@@ -56,11 +56,13 @@ class TeamSerializer(serializers.ModelSerializer):
             T.tournament = 'Idle Teams'
         U = Team.objects.all().filter(name='Uncapped')
         if U.player_set.count < 11:
+            T.delete()
             return
         else:
             for i in range(11):
                 U.player_set.all()[0].team = T
                 U.player_set.all()[0].save()
+                U.save()
         T.captain = random.randint(0,10)
         T.wicketkeeper = random.randint(0,10)
         T.save()
