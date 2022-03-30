@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
 
 from .models import Tournament, Team, Player, Match
-from .serializers import TournamentSerializer, TeamSerializer, PlayerSerializer, MatchSerializer
+from .serializers import TournamentSerializer, TeamSerializer, PlayerSerializer, MatchSerializer, StatSerializer
 class Index(
     APIView,
     UpdateModelMixin,
@@ -35,7 +35,7 @@ class TournamentView(
 
         else:
         # Get all tournament items from the database using Django's model ORM
-            queryset = Tournament.objects.all()
+            queryset = Tournament.objects.all().exclude(name='Idle Teams')
 
         # Serialize list of tournament from Django queryset object to JSON formatted data
             read_serializer = TournamentSerializer(queryset, many=True)
@@ -117,7 +117,7 @@ class TournamentUView(
             read_serializer = TournamentSerializer(T)
         else:
         # Get all tournament items from the database using Django's model ORM
-            queryset = Tournament.objects.all()
+            queryset = Tournament.objects.all().filter(scheduled=False).exclude(name='Idle Teams')
 
         # Serialize list of tournament from Django queryset object to JSON formatted data
             read_serializer = TournamentSerializer(queryset, many=True)
@@ -141,7 +141,7 @@ class TournamentSView(
             try:
                 T = Tournament.objects.get(id=id)
                 if(T.scheduled == False):
-                    return Response({'errors': 'This tournament is scheduled.'}, status = 400)
+                    return Response({'errors': 'This tournament is not scheduled.'}, status = 400)
                 if(T.completed == True):
                     return Response({'errors': 'This tournament is completed.'}, status = 400)
             except:
@@ -149,7 +149,7 @@ class TournamentSView(
             read_serializer = TournamentSerializer(T)
         else:
         # Get all tournament items from the database using Django's model ORM
-            queryset = Tournament.objects.all()
+            queryset = Tournament.objects.all().filter(scheduled=True, completed=False).exclude(name='Idle Teams')
 
         # Serialize list of tournament from Django queryset object to JSON formatted data
             read_serializer = TournamentSerializer(queryset, many=True)
@@ -173,7 +173,7 @@ class TournamentCView(
             try:
                 T = Tournament.objects.get(id=id)
                 if(T.completed == False):
-                    return Response({'errors': 'This tournament is scheduled.'}, status = 400)
+                    return Response({'errors': 'This tournament is not completed.'}, status = 400)
             except:
                 return Response({'errors': 'This tournament does not exist.'}, status=400)
             return redirect('/tournaments/'+str(id)+'/')
@@ -214,7 +214,7 @@ class TeamView(
 
         else:
         # Get all tournament items from the database using Django's model ORM
-            queryset = Team.objects.all()
+            queryset = Team.objects.all().exclude(name='Uncapped')
 
         # Serialize list of tournament from Django queryset object to JSON formatted data
             read_serializer = TeamSerializer(queryset, many=True)
@@ -458,3 +458,29 @@ class MatchView(
 
     # Return a HTTP response notifying that the todo item was successfully deleted
         return Response(status=204)
+
+class StatView(
+  APIView, # Basic View class provided by the Django Rest Framework
+  UpdateModelMixin, # Mixin that allows the basic APIView to handle PUT HTTP requests
+  DestroyModelMixin, # Mixin that allows the basic APIView to handle DELETE HTTP requests
+):
+
+    def get(self, request, id=None):
+        if id:
+        # If an id is provided in the GET request, retrieve the Match item by that id
+            try:
+        # Check if the tournament the user wants to update exists
+                t = Tournament.objects.get(id=id)
+                queryset = []
+                for q in t.team_set.all():
+                    for x in q.player_set.all():
+                        queryset.append(x)
+            except Match.DoesNotExist:
+            # If the tournament does not exist, return an error response
+                return Response({'errors': 'This todo item does not exist.'}, status=400)
+
+        # Serialize tournament item from Django queryset object to JSON formatted data
+            read_serializer = StatSerializer(queryset, many=True)
+
+        # Return a HTTP response object with the list of todo items as JSON
+        return Response(read_serializer.data)
