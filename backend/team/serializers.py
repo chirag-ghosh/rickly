@@ -56,11 +56,13 @@ class TeamSerializer(serializers.ModelSerializer):
             T.tournament = 'Idle Teams'
         U = Team.objects.all().filter(name='Uncapped')
         if U.player_set.count < 11:
+            T.delete()
             return
         else:
             for i in range(11):
                 U.player_set.all()[0].team = T
                 U.player_set.all()[0].save()
+                U.save()
         T.captain = random.randint(0,10)
         T.wicketkeeper = random.randint(0,10)
         T.save()
@@ -69,12 +71,12 @@ class TeamSerializer(serializers.ModelSerializer):
         if(str(validated_data.get('name')) != "None"):
             instance.name = validated_data.get('name')
         else:
-            instance.name = 'Idle Teams'
+            pass
         instance.save()
         if(str(validated_data.get('tournament')) != "None"):
             instance.tournament = validated_data.get('tournament')
         else:
-            instance.tournament = 'Idle Teams'
+            pass
         instance.save()
         return instance
 
@@ -95,15 +97,15 @@ class PlayerSerializer(serializers.ModelSerializer):
         if(str(validated_data.get('team')) != "None"):
             T.team = validated_data.get('team')
         else:
-            T.team = 'Uncapped'
+            pass
         if(str(validated_data.get('bat')) != "None"):
             T.bathandedness = str(validated_data.get('bat'))
         else:
-            T.bathandedness = 'right'
+            pass
         if(str(validated_data.get('ball')) != "None"):
             T.ballhandedness = validated_data.get('ball')
         else:
-            T.ballhandedness = 'right'
+            pass
         T.save()
         if(str(validated_data.get('specs')) != "None"):
             T.specifics = validated_data.get('specs')
