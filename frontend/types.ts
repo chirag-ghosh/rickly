@@ -13,7 +13,10 @@ export type Player = {
     age: number,
     gender: 'male' | 'female' | 'others',
     team: string,
-    category: 'batsman' | 'bowler' | 'allrounder'
+    role: 'batter' | 'bowler' | 'allrounder' | 'wicketkeeper',
+    specifics: string,
+    bathandedness: 'right' | 'left',
+    ballhandedness: 'right' | 'left'
 }
 
 export type QuickCardProps = {

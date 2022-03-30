@@ -1,15 +1,19 @@
 import { useRouter } from "next/router"
 import React from "react";
 import Table from "../../components/table";
+import { useSearchContext } from "../../hooks/useSearchContext";
 import { getTeamFromID } from "../../utils/helpers";
 import { samplePlayers } from "../../utils/sampleData";
 
 const Team = () => {
 
+    const {teamList} = useSearchContext();
     const router = useRouter();
-    const team = getTeamFromID(router.query.id);
+    const team = getTeamFromID(router.query.id, teamList);
 
-    const data = React.useMemo(() => [...samplePlayers.filter((player) => player.team === team?.name)], []);
+    const {playerList} = useSearchContext();
+
+    const data = React.useMemo(() => [...playerList.filter((player) => player.team === team?.name)], []);
     const columns = React.useMemo(() => [
         {
             Header: 'Name',
@@ -20,12 +24,16 @@ const Team = () => {
             accessor: 'age',
         },
         {
-            Header: 'Gender',
-            accessor: 'gender',
+            Header: 'Category',
+            accessor: 'role'
         },
         {
-            Header: 'Category',
-            accessor: 'category'
+            Header: 'Batting Hand',
+            accessor: 'bathandedness'
+        },
+        {
+            Header: 'Bowling Hand',
+            accessor: 'ballhandedness'
         }
     ], []);
 
@@ -45,10 +53,6 @@ const Team = () => {
                         <div className="team-highlight green">
                             <h2>Wicket Keeper</h2>
                             <div>{team.wicketKeeper}</div>
-                        </div>
-                        <div className="team-highlight blue">
-                            <h2>Coach</h2>
-                            <div>{team.coach}</div>
                         </div>
                     </div>
                     <div className="team-players">

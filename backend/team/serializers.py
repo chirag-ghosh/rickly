@@ -10,7 +10,7 @@ class TournamentSerializer(serializers.ModelSerializer):
         T = Tournament.objects.create(name=validated_data.get('name'))
         for team in Team.objects.all():
             if team.name != 'Uncapped':
-                self.team_set.add(team)
+                T.team_set.add(team)
                 team.save()
         return T
     def post(self, instance, data):

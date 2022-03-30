@@ -1,8 +1,10 @@
+import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSearchContext } from "../../hooks/useSearchContext";
 import { Tournament } from "../../types";
+import { BACKEND_URL } from "../../utils/constants";
 import { sampleTournaments } from "../../utils/sampleData";
 
 const Tournament: NextPage = () => {
@@ -26,7 +28,20 @@ const Tournament: NextPage = () => {
                 return tournament.completed;
 
         }));
-    }, [mode]);
+    }, [mode, tournamentList]);
+
+    const createNewTournament = (name: string) => {
+
+        axios.post(`${BACKEND_URL}/tournaments/`, {
+            name,
+            "match_set": [],
+            "team_set": []
+        })
+        .then((res) => {
+            router.reload();
+        })
+        .catch((err) => console.log(err));
+    }
 
     return(
         <div className="tournaments-page">
@@ -35,7 +50,7 @@ const Tournament: NextPage = () => {
                 <h2>Create new Tournament <span>( All teams present will be played )</span></h2>
                 <div className="input-bar">
                     <input type='text' placeholder="Enter tournament name" onChange={(event) => setNewTournamentName(event.target.value)}></input>
-                    <button>Create tournament</button>
+                    <button onClick={() => createNewTournament(newTournamentName)}>Create tournament</button>
                 </div>
             </div>
             <div className="browse-tournaments">

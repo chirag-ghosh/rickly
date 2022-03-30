@@ -41,7 +41,7 @@
     }
 
     .player-highlight {
-        min-width: 20rem;
+        min-width: 25rem;
         padding: 1rem 1.5rem;
         margin: 1rem;
         display: flex;
@@ -71,6 +71,7 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+        flex-wrap: wrap;
 
         & .red {
             background-color: rgba(#FC4F4F, 0.15);

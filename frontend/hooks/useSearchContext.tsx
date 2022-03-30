@@ -41,6 +41,19 @@ export const SearchProvider: React.FC = ({children}: any) => {
             .then((response) => {
                 setTournamentList(response.data);
             })
+            .catch((err) => console.log(err));
+
+        axios.get(`${BACKEND_URL}/teams`)
+            .then((response) => {
+                setTeamList(response.data);
+            })
+            .catch((err) => console.log(err));
+
+        axios.get(`${BACKEND_URL}/players`)
+            .then((response) => {
+                setPlayerList(response.data);
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     useEffect(() => {

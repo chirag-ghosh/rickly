@@ -1,14 +1,18 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import Table from "../../components/table";
+import { useSearchContext } from "../../hooks/useSearchContext";
 import { Match } from "../../types";
+import { BACKEND_URL } from "../../utils/constants";
 import { getTournamentFromID } from "../../utils/helpers";
 import { sampleMatches } from "../../utils/sampleData";
 
 const Tournament = () => {
 
+    const {tournamentList} = useSearchContext();
     const router = useRouter();
-    const tournament = getTournamentFromID(router.query.id);
+    const tournament = getTournamentFromID(router.query.id, tournamentList);
 
     const [matches, setMatches] = useState<Match[]>([]);
 
@@ -18,6 +22,17 @@ const Tournament = () => {
             return match.tournament === tournament?.name
         }))
     }, []);
+
+    const createSchedule = () => {
+
+        axios.post(`${BACKEND_URL}/tournaments/unscheduled/${router.query.id}/`)
+            .then((res) => {
+                router.reload();
+            })
+            .catch((err) => console.log(err));
+    }
+
+
 
     const data = useMemo(() => [...matches], [matches])
 
@@ -57,7 +72,10 @@ const Tournament = () => {
                     </div>
                 )
                 : (
-                    <h3>Tournament matches not scheduled yet.</h3>
+                    <div>
+                        <h3>Tournament matches not scheduled yet.</h3>
+                        <button onClick={() => createSchedule()}>Create Schedule</button>
+                    </div>
                 )
             }
         </div>

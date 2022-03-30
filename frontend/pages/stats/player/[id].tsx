@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSearchContext } from "../../../hooks/useSearchContext";
 import { getPlayerFromID } from "../../../utils/helpers";
 
 const Player = () => {
 
+    const {playerList} = useSearchContext();
     const router = useRouter();
-    const player = getPlayerFromID(router.query.id);
+    const player = getPlayerFromID(router.query.id, playerList);
 
     const [matchCount, setMatchCount] = useState<number>();
     const [totalRuns, setTotalRuns] = useState<number>();
