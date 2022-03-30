@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
 
 from .models import Scoreline, Tournament, Team, Player, Match
-from .serializers import TournamentSerializer, TeamSerializer, PlayerSerializer, MatchSerializer, StatSerializer, ScorelineSerializer
+from .serializers import TournamentSerializer, TeamSerializer, PlayerSerializer, MatchSerializer, StatSerializer
 class Index(
     APIView,
     UpdateModelMixin,
@@ -479,27 +479,6 @@ class StatView(
 
         # Serialize tournament item from Django queryset object to JSON formatted data
             read_serializer = StatSerializer(queryset, many=True)
-
-        # Return a HTTP response object with the list of todo items as JSON
-        return Response(read_serializer.data)
-class ScorelineView(
-  APIView, # Basic View class provided by the Django Rest Framework
-  UpdateModelMixin, # Mixin that allows the basic APIView to handle PUT HTTP requests
-  DestroyModelMixin, # Mixin that allows the basic APIView to handle DELETE HTTP requests
-):
-
-    def get(self, request, id=None):
-        if id:
-        # If an id is provided in the GET request, retrieve the Match item by that id
-            try:
-        # Check if the tournament the user wants to update exists
-                queryset = Scoreline.objects.get(id=id)
-            except Scoreline.DoesNotExist:
-            # If the tournament does not exist, return an error response
-                return Response({'errors': 'This todo item does not exist.'}, status=400)
-
-        # Serialize tournament item from Django queryset object to JSON formatted data
-            read_serializer = ScorelineSerializer(queryset, many=True)
 
         # Return a HTTP response object with the list of todo items as JSON
         return Response(read_serializer.data)
