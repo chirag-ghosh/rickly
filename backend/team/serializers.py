@@ -98,13 +98,13 @@ class PlayerSerializer(serializers.Serializer):
         )
 class MatchSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100, required=True)
-    def update(self, instance, validated_data):
+    def update(self, instance):
         instance.generate()
         instance.save()
         return instance
     class Meta:
         model = Match
         fields = (
-            'name',
-            'tournament'
+            'winner',
+            'tournament',
         )
