@@ -23,6 +23,15 @@ const Tournament = () => {
         }))
     }, []);
 
+    useEffect(() => {
+
+        axios.get(`${BACKEND_URL}/matches`)
+            .then((response) => setMatches(response.data.filter((match: Match) => {
+                return (match.tournament == router.query.id)
+            })))
+            .catch((err) => console.log(err));
+    }, []);
+
     const createSchedule = () => {
 
         axios.post(`${BACKEND_URL}/tournaments/unscheduled/${router.query.id}/`)
@@ -39,15 +48,16 @@ const Tournament = () => {
     const columns = useMemo(() => [
         {
             Header: 'Date',
-            accessor: 'date'
+            accessor: 'date',
+            Cell: ({ cell }: { cell: { value: any } }) => <div>{(new Date(cell.value)).toDateString()}</div>
         },
         {
             Header: 'Team A',
-            accessor: 'teamA',
+            accessor: 'team_names[0]',
         },
         {
             Header: 'Team B',
-            accessor: 'teamB',
+            accessor: 'team_names[1]',
         },
         {
             Header: 'Winner',
@@ -74,7 +84,7 @@ const Tournament = () => {
                 : (
                     <div>
                         <h3>Tournament matches not scheduled yet.</h3>
-                        <button onClick={() => createSchedule()}>Create Schedule</button>
+                        <button className="button" onClick={() => createSchedule()}>Create Schedule</button>
                     </div>
                 )
             }
