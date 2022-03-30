@@ -135,15 +135,27 @@ class PlayerSerializer(serializers.ModelSerializer):
         )
 class MatchSerializer(serializers.ModelSerializer):
     team_names = serializers.SerializerMethodField('team_name')
-    #scoreline_set = serializers.SerializerMethodField('scorer')
+    scoreline_set = serializers.SerializerMethodField('scorer')
     def team_name(self, instance):
         L = []
         for i in instance.playing11_set.all():
             L.append(i.team.name)
         return L
-    '''def scorer(self, instance):
-        L = [i.scoreline_set.all() for i in instance.playing11_set.all()]
-        return L'''
+    def scorer(self, instance):
+        L = []
+        for i in instance.playing11_set.all():
+            M = []
+            for j in i.scoreline_set.all():
+                S = []
+                for k in j.playerinline_set.all():
+                    S.append((k.player.name,k.role))
+                M.append(S)
+                M.append(j.run)
+                M.append(j.ballfaced)
+                M.append(j.out)
+                M.append(j.outdesc)
+            L.append(M)
+        return L
     def update(self, instance):
         instance.generate()
         instance.save()
@@ -154,21 +166,12 @@ class MatchSerializer(serializers.ModelSerializer):
             'id',
             'date',
             'winner',
+            'result',
             'tournament',
-            #'scoreline_set',
+            'scoreline_set',
             'playing11_set',
             'team_names',
         )
-'''class ScorelineSerializer(serializers.ModelSerializer):
-    players_in_line = serializers.SerializerMethodField('pil')
-    def pil(self, instance):
-        L = [(i.player,i.role) for i in instance.player_in_line.all()]
-    class Meta:
-        model = Scoreline
-        fields = (
-            'id',
-            'players_in_line',
-        )'''
 class StatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player

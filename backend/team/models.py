@@ -49,6 +49,8 @@ class Team(models.Model):
     win = models.PositiveBigIntegerField(default=0)
     loss = models.PositiveBigIntegerField(default=0)
     DNR = models.PositiveBigIntegerField(default=0)
+    captain = models.PositiveBigIntegerField(default=0)
+    wicketkeeper = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.name
 
@@ -79,42 +81,43 @@ class Match(models.Model):
                     L.ballfaced = ballremaining            
                 ballremaining -= L.ballfaced
                 L.run = random.randint(0,6*L.ballfaced)
-                if(L.run > 50):
-                    L._50count += 1
-                if(L.run > 100):
-                    L._1Ccount += 1
                 frun += L.run
                 batter = L.playerinline_set.create(player = bt.team.player_set.all()[i-1],role='batter')
                 batter.player.runcount += L.run
+                if(L.run > 50):
+                    batter.player._50count += 1
+                if(L.run > 100):
+                    batter.player._1Ccount += 1
+                batter.player.save()
+                batter.save()
                 x = random.randint(i,lcount)
                 if((x == i and nocount == 1) or (i == lcount and not ao)):   #not out
                     L.outdesc = 'Not'
                     nocount = 0
                 else:   #how wicket fell
+                    L.out = True
                     x = random.randint(0,980)
                     if(x < 214):
                         L.outdesc = 'Bowled'
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
-                        bowler.w += 1
+                        bowler.player.save()
                         bowler.save()
                     elif(x < 783):
                         L.outdesc = 'Caught'
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
-                        bowler.w += 1
-                        if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                        bowler.player.save()
                         bowler.save()
                         fielder = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(0,10)])
                         fielder.player.catcount += 1
+                        fielder.player.save()
+                        fielder.save()
                     elif(x < 926):
                         L.outdesc = 'LBW'
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
-                        bowler.w += 1
-                        if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                        bowler.player.save()
                         bowler.save()
                     elif(x < 960):
                         L.outdesc = 'Run'
@@ -123,9 +126,7 @@ class Match(models.Model):
                         L.outdesc = 'Stumped'
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
-                        bowler.w += 1
-                        if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                        bowler.player.save()
                         bowler.save()
                         P = list(wt.team.player_set.all().filter(role='wicketkeeper'))
                         if(not len(P)):
@@ -136,7 +137,7 @@ class Match(models.Model):
             win = random.randint(0,44)
             if(win < 22):
                 self.result = True
-                win = False
+                self.winner = batf
                 bt.team.win += 1
                 wt.team.loss += 1
                 chasrun = random.randint(0,frun-1)
@@ -159,37 +160,40 @@ class Match(models.Model):
                     ballremaining -= L.ballfaced
                     batter = L.playerinline_set.create(player = wt.team.player_set.all()[i-1],role='batter')
                     batter.player.runcount += L.run
+                    if(L.run > 50):
+                        batter.player._50count += 1
+                    if(L.run > 100):
+                        batter.player._1Ccount += 1
+                    batter.player.save()
+                    batter.save()
                     x = random.randint(i,lcount)
                     if((x == i and nocount == 1) or i == lcount):   #not out
                         L.outdesc = 'Not'
                         nocount = 0
                     else:   #how wicket fell
+                        L.out = True
                         x = random.randint(0,980)
                         if(x < 214):
                             L.outdesc = 'Bowled'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                         elif(x < 783):
                             L.outdesc = 'Caught'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                             fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                             fielder.player.catcount += 1
+                            fielder.player.save()
+                            fielder.save()
                         elif(x < 926):
                             L.outdesc = 'LBW'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                         elif(x < 960):
                             L.outdesc = 'Run'
@@ -198,9 +202,7 @@ class Match(models.Model):
                             L.outdesc = 'Stumped'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                             x = list(bt.team.player_set.all().filter(role='wicketkeeper'))
                             if(not len(x)):
@@ -211,7 +213,7 @@ class Match(models.Model):
 
             elif(win > 22):
                 self.result = True
-                win = True
+                self.winner = not batf
                 bt.team.loss += 1
                 wt.team.win += 1
                 chasrun = random.randint(frun+1,frun+6)
@@ -231,37 +233,40 @@ class Match(models.Model):
                     ballremaining -= L.ballfaced
                     batter = L.playerinline_set.create(player = wt.team.player_set.all()[i-1],role='batter')
                     batter.player.runcount += L.run
+                    if(L.run > 50):
+                        batter.player._50count += 1
+                    if(L.run > 100):
+                        batter.player._1Ccount += 1
+                    batter.player.save()
+                    batter.save()
                     x = random.randint(i,lcount)
                     if((x == i and nocount == 1) or i == lcount):   #not out
                         L.outdesc = 'Not'
                         nocount = 0
                     else:   #how wicket fell
+                        L.out = True
                         x = random.randint(0,980)
                         if(x < 214):
                             L.outdesc = 'Bowled'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                         elif(x < 783):
                             L.outdesc = 'Caught'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                             fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                             fielder.player.catcount += 1
+                            fielder.player.save()
+                            fielder.save()
                         elif(x < 926):
                             L.outdesc = 'LBW'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                         elif(x < 960):
                             L.outdesc = 'Run'
@@ -270,9 +275,7 @@ class Match(models.Model):
                             L.outdesc = 'Stumped'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                             x = list(bt.team.player_set.all().filter(role='wicketkeeper'))
                             if(not len(x)):
@@ -302,28 +305,30 @@ class Match(models.Model):
                     ballremaining -= L.ballfaced
                     batter = L.playerinline_set.create(player = wt.team.player_set.all()[i-1],role='batter')
                     batter.player.runcount += L.run
+                    if(L.run > 50):
+                        batter.player._50count += 1
+                    if(L.run > 100):
+                        batter.player._1Ccount += 1
+                    batter.player.save()
                     batter.save()
                     x = random.randint(i,lcount)
                     if((x == i and nocount == 1) or i == lcount):   #not out
                         L.outdesc = 'Not'
                         nocount = 0
                     else:   #how wicket fell
+                        L.out = True
                         x = random.randint(0,980)
                         if(x < 214):
                             L.outdesc = 'Bowled'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                         elif(x < 783):
                             L.outdesc = 'Caught'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                             fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                             fielder.player.catcount += 1
@@ -332,9 +337,7 @@ class Match(models.Model):
                             L.outdesc = 'LBW'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                         elif(x < 960):
                             L.outdesc = 'Run'
@@ -344,9 +347,7 @@ class Match(models.Model):
                             L.outdesc = 'Stumped'
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
-                            bowler.w += 1
-                            if(bowler.w >= 5):
-                                bowler.player._5wcount += 1
+                            bowler.player.save()
                             bowler.save()
                             x = list(bt.team.player_set.all().filter(role='wicketkeeper'))
                             if(not len(x)):
