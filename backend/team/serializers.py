@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Tournament, Team, Player
+from .models import Tournament, Team, Player, Match
 
 
 class TournamentSerializer(serializers.ModelSerializer):
@@ -36,17 +36,75 @@ class TeamSerializer(serializers.Serializer):
     def create(self, validated_data):
         T = Team.objects.create(name=validated_data.get('name'))
         try:
-            T.Tournament = validated_data.get('Tournament')
+            T.tournament = validated_data.get('tournament')
         except:
             pass
         return T
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
+        instance.tournament = validated_data.get('tournament', instance.tournament)
         instance.save()
         return instance
     class Meta:
         model = Team
         fields = (
             'name',
-            'tournament'
+            'tournament',
+            'id',
+        )
+class PlayerSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=100, required=True)
+    def create(self, validated_data):
+        T = Player.objects.create(name=validated_data.get('name'))
+        try:
+            T.team = validated_data.get('team')
+        except:
+            pass
+        T.age = validated_data.get('age')
+        T.role = validated_data.get('role')
+        try:
+            T.bathandedness = validated_data.get('bat')
+        except:
+            pass
+        try:
+            T.ballhandedness = validated_data.get('ball')
+        except:
+            pass
+        try:
+            T.specifics = validated_data.get('specs')
+        except:
+            pass
+        return T
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.age = validated_data.get('age', instance.age)
+        instance.team = validated_data.get('team', instance.team)
+        instance.bathandedness = validated_data.get('bat', instance.bathandedness)
+        instance.ballhandedness = validated_data.get('ball', instance.ballhandedness)
+        instance.specifics = validated_data.get('specs', instance.soecifics)
+        instance.role = validated_data.get('role', instance.role)
+        instance.save()
+        return instance
+    class Meta:
+        model = Player
+        fields = (
+            'name',
+            'age',
+            'team',
+            'bathandedness',
+            'ballhandedness',
+            'specifics',
+            'role'
+        )
+class MatchSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=100, required=True)
+    def update(self, instance):
+        instance.generate()
+        instance.save()
+        return instance
+    class Meta:
+        model = Match
+        fields = (
+            'winner',
+            'tournament',
         )
