@@ -13,6 +13,21 @@
     }
 }
 
+.players-page {
+    .button {
+        width: 30%;
+        outline: none;
+        border: none;
+        font-size: 1.5rem;
+        padding: 1rem 1.5rem;
+        background-color: #FFB72B;
+        color: #333;
+        border-radius: 10px;
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+}
+
 .player-page {
     display: flex;
     flex-direction: column;
