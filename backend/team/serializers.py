@@ -5,17 +5,24 @@ from .models import Tournament, Team, Player, Match
 
 class TournamentSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
-
     def create(self, validated_data):
     # Once the request data has been validated, we can create a todo item instance in the database
         T = Tournament.objects.create(name=validated_data.get('name'))
         for team in Team.objects.all():
             if team.name != 'Uncapped':
-                team.Tournament = T
+                self.team_set.add(team)
+                team.save()
         return T
-    def schedule(self, instance):
-        instance.setschedule()
-        return
+    def post(self, instance, data):
+        I = data.get('Schedule')
+        try:
+            i = int(I)
+        except:
+            return instance
+        if(i):
+            instance.setschedule()
+            instance.save()
+        return instance
     def update(self, instance, validated_data):
         # Once the request data has been validated, we can update the todo item instance in the database
         instance.name = validated_data.get('name', instance.name)
@@ -30,50 +37,67 @@ class TournamentSerializer(serializers.ModelSerializer):
             'match_num',
             'scheduled',
             'completed',
+            'team_set',
+            'match_set',
         )
-class TeamSerializer(serializers.Serializer):
+class TeamSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
     def create(self, validated_data):
         T = Team.objects.create(name=validated_data.get('name'))
         try:
             T.tournament = validated_data.get('tournament')
+            if(not len(T)):
+                T.tournament = 'Idle Teams'
         except:
             pass
+        T.save()
         return T
     def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
-        instance.tournament = validated_data.get('tournament', instance.tournament)
+        try:
+            X = validated_data.get('name')
+            if(len(X)):
+                instance.name = X
+        except:
+            pass
+        try:
+            N = validated_data.get('tournament')
+            if(len(N)):
+                instance.tournament = N
+        except:
+            N = instance.tournament
+        instance.tournament = N
         instance.save()
         return instance
+
     class Meta:
         model = Team
-        fields = (
-            'name',
-            'tournament',
+        fields = [
             'id',
-        )
-class PlayerSerializer(serializers.Serializer):
+            'tournament',
+            'name',
+        ]
+class PlayerSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
     def create(self, validated_data):
-        T = Player.objects.create(name=validated_data.get('name'))
-        try:
+        T = Player.objects.create(name=validated_data.get('name'),age = validated_data.get('age'),role = validated_data.get('role'))
+        if(str(validated_data.get('team')) != "None"):
             T.team = validated_data.get('team')
-        except:
-            pass
-        T.age = validated_data.get('age')
-        T.role = validated_data.get('role')
-        try:
-            T.bathandedness = validated_data.get('bat')
-        except:
-            pass
-        try:
+        else:
+            T.team = 'Uncapped'
+        if(str(validated_data.get('bat')) != "None"):
+            T.bathandedness = str(validated_data.get('bat'))
+        else:
+            T.bathandedness = 'right'
+        if(str(validated_data.get('ball')) != "None"):
             T.ballhandedness = validated_data.get('ball')
-        except:
-            pass
-        try:
+        else:
+            T.ballhandedness = 'right'
+        T.save()
+        if(str(validated_data.get('specs')) != "None"):
             T.specifics = validated_data.get('specs')
-        except:
-            pass
+        else:
+            T.specifics = 'None'
+        T.save()
         return T
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
@@ -88,6 +112,7 @@ class PlayerSerializer(serializers.Serializer):
     class Meta:
         model = Player
         fields = (
+            'id',
             'name',
             'age',
             'team',
@@ -96,7 +121,7 @@ class PlayerSerializer(serializers.Serializer):
             'specifics',
             'role'
         )
-class MatchSerializer(serializers.Serializer):
+class MatchSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=100, required=True)
     def update(self, instance):
         instance.generate()
@@ -105,6 +130,7 @@ class MatchSerializer(serializers.Serializer):
     class Meta:
         model = Match
         fields = (
+            'id',
             'winner',
             'tournament',
         )
