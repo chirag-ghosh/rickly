@@ -49,7 +49,7 @@ const Match = () => {
         {
             Header: 'Stats',
             accessor: 'id',
-            Cell: ({ cell }: { cell: { value: any } }) => <button onClick={() => router.push(`stats/match/${cell.value}`)}>Open Stats</button>
+            Cell: ({ cell }: { cell: { value: any } }) => <button onClick={() => router.push(`/stats/match/${cell.value}`)}>Open Stats</button>
         }
     ], [matchList]);
 
