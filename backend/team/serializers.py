@@ -49,22 +49,28 @@ class TeamSerializer(serializers.ModelSerializer):
     def wicname(self, instance):
         return instance.player_set.all()[instance.wicketkeeper].name
     def create(self, validated_data):
-        T = Team.objects.create(name=validated_data.get('name'))
-        if(str(validated_data.get('tournament')) != "None"):
-            T.tournament = validated_data.get('tournament')
-        else:
-            T.tournament = 'Idle Teams'
-        U = Team.objects.all().filter(name='Uncapped')
-        if U.player_set.count < 11:
-            T.delete()
+        U = Team.objects.get(name='Uncapped')
+        if U.player_set.count() < 11:
             return
         else:
+            T = Team.objects.create(name=validated_data.get('name'))
+            if(str(validated_data.get('tournament')) != "None"):
+                T.tournament = validated_data.get('tournament')
+            else:
+                pass
             for i in range(11):
-                U.player_set.all()[0].team = T
-                U.player_set.all()[0].save()
-                U.save()
-        T.captain = random.randint(0,10)
-        T.wicketkeeper = random.randint(0,10)
+                #print("Hi")
+                try:
+                    #print(U.player_set.all()[0])
+                    T.player_set.add(U.player_set.all()[0])
+                    T.save()
+                    U.player_set.all()[0].save()
+                    U.save()
+                except:
+                    return
+            T.save()
+        T.captain = random.randint(0,T.player_set.count() - 1)
+        T.wicketkeeper = random.randint(0,T.player_set.count() - 1)
         T.save()
         return T
     def update(self, instance, validated_data):
