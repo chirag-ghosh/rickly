@@ -67,7 +67,7 @@ class TeamSerializer(serializers.ModelSerializer):
                     U.player_set.all()[0].save()
                     U.save()
                 except:
-                    return
+                    return U
             T.save()
         T.captain = random.randint(0,T.player_set.count() - 1)
         T.wicketkeeper = random.randint(0,T.player_set.count() - 1)
