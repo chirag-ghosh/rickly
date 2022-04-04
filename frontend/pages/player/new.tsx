@@ -66,7 +66,7 @@ const NewPlayer = () => {
             role: category.value
         })
             .then((response) => {
-                router.replace('/player')
+                router.reload()
             })
             .catch(err => console.log(err));
     }

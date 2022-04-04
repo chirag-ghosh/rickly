@@ -10,11 +10,11 @@ const NewTeam = () => {
     const router = useRouter();
 
     const createTeam = () => {
-        axios.post(`${BACKEND_URL}/teams`, {name: name})
+        axios.post(`${BACKEND_URL}/teams/`, {name: name, player_set: []})
             .then((response) => {
-                router.replace('/teams')
+                router.reload()
             })
-            .catch((err) => console.log(err));
+            .catch((err) => alert("Please create 11 uncapped players before trying to create team"));
     }
 
     return(

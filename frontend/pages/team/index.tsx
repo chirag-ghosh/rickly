@@ -17,6 +17,7 @@ const Team: NextPage = () => {
 
     return(
         <div className="teams-page">
+            <button className="button" onClick={() => router.push('/team/new')}>Create new Team</button>
             <h1>List of all teams</h1>
             <div className="team-list">
                 {
