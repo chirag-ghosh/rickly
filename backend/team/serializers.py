@@ -51,7 +51,7 @@ class TeamSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         U = Team.objects.get(name='Uncapped')
         if U.player_set.count() < 11:
-            return
+            return U
         else:
             T = Team.objects.create(name=validated_data.get('name'))
             if(str(validated_data.get('tournament')) != "None"):
