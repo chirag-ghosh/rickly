@@ -5,10 +5,12 @@ import { BarChart2, Star, User, Users } from "react-feather";
 const Sidebar: NextComponentType = () => {
     return(
         <div className="sidebar">
-            <div className="title-bar">
-                <img src="/logo.png" alt="rickly-logo"></img>
-                <div>RICKLY</div>
-            </div>
+            <Link href='/'>
+                <div className="title-bar">
+                    <img src="/logo.png" alt="rickly-logo"></img>
+                    <div>RICKLY</div>
+                </div>
+            </Link>
             <div className="option-list">
                 <Link href="/team">
                     <div className="option">
