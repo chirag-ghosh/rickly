@@ -227,10 +227,11 @@ class TeamView(
 
         # Check if user POST data passes validation checks from serializer
         if create_serializer.is_valid():
-
+            
         # If user data is valid, create a new todo item record in the database
             todo_item_object = create_serializer.save()
-
+            if(todo_item_object.name == 'Uncapped'):
+                return Response("Not enough Players", status=400)
         # Serialize the new todo item from a Python object to JSON format
             read_serializer = TeamSerializer(todo_item_object)
 
