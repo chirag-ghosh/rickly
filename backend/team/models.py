@@ -35,9 +35,13 @@ class Tournament(models.Model):
     def trycomplete(self):
         f = 1
         for m in self.match_set.all():
-            m.generate()
-            m.save()
-        self.completed = True
+            if(m.date < datetime.now()): 
+                m.generate()
+                m.save()
+            else:
+                f = 0
+        if(f):
+            self.completed = True
         return
 
 class Team(models.Model):
@@ -77,7 +81,7 @@ class Match(models.Model):
                 if(not ao and i == lcount):
                     L.ballfaced = ballremaining            
                 ballremaining -= L.ballfaced
-                L.run = random.randint(0,6*L.ballfaced)
+                L.run = random.randint(0,6*(L.ballfaced - 1))
                 frun += L.run
                 batter = L.playerinline_set.create(player = bt.team.player_set.all()[i-1],role='batter')
                 batter.player.runcount += L.run
@@ -96,16 +100,12 @@ class Match(models.Model):
                     x = random.randint(0,980)
                     if(x < 214):
                         L.outdesc = 'Bowled'
-                        L.ballfaced += 1
-                        ballremaining -= 1
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
                         bowler.player.save()
                         bowler.save()
                     elif(x < 783):
                         L.outdesc = 'Caught'
-                        L.ballfaced += 1
-                        ballremaining -= 1
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
                         bowler.player.save()
@@ -116,8 +116,6 @@ class Match(models.Model):
                         fielder.save()
                     elif(x < 926):
                         L.outdesc = 'LBW'
-                        L.ballfaced += 1
-                        ballremaining -= 1
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
                         bowler.player.save()
@@ -127,8 +125,6 @@ class Match(models.Model):
                         fielder = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(0,10)])
                     else:
                         L.outdesc = 'Stumped'
-                        L.ballfaced += 1
-                        ballremaining -= 1
                         bowler = L.playerinline_set.create(player = wt.team.player_set.all()[random.randint(6,10)],role='bowler')
                         bowler.player.wickount += 1
                         bowler.player.save()
@@ -180,16 +176,12 @@ class Match(models.Model):
                         x = random.randint(0,980)
                         if(x < 214):
                             L.outdesc = 'Bowled'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
                             bowler.save()
                         elif(x < 783):
                             L.outdesc = 'Caught'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -200,8 +192,6 @@ class Match(models.Model):
                             fielder.save()
                         elif(x < 926):
                             L.outdesc = 'LBW'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -211,8 +201,6 @@ class Match(models.Model):
                             fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                         else:
                             L.outdesc = 'Stumped'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -261,16 +249,12 @@ class Match(models.Model):
                         x = random.randint(0,980)
                         if(x < 214):
                             L.outdesc = 'Bowled'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
                             bowler.save()
                         elif(x < 783):
                             L.outdesc = 'Caught'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -281,8 +265,6 @@ class Match(models.Model):
                             fielder.save()
                         elif(x < 926):
                             L.outdesc = 'LBW'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -292,8 +274,6 @@ class Match(models.Model):
                             fielder = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(0,10)])
                         else:
                             L.outdesc = 'Stumped'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -341,16 +321,12 @@ class Match(models.Model):
                         x = random.randint(0,980)
                         if(x < 214):
                             L.outdesc = 'Bowled'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
                             bowler.save()
                         elif(x < 783):
                             L.outdesc = 'Caught'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -360,8 +336,6 @@ class Match(models.Model):
                             fielder.save()
                         elif(x < 926):
                             L.outdesc = 'LBW'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
@@ -372,8 +346,6 @@ class Match(models.Model):
                             fielder.save()
                         else:
                             L.outdesc = 'Stumped'
-                            L.ballfaced += 1
-                            ballremaining -= 1
                             bowler = L.playerinline_set.create(player = bt.team.player_set.all()[random.randint(6,10)],role='bowler')
                             bowler.player.wickount += 1
                             bowler.player.save()
