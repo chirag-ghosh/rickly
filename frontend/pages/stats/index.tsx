@@ -8,7 +8,7 @@ const Stats: NextPage = () => {
                 <div className='title'>Show Stats</div>
                 <div className='card-wrapper'>
                     <QuickCard title='Player Stats' link='/stats/player' imgSrc='/player.jpg' />
-                    <QuickCard title='Team Stats' link='/stats/team' imgSrc='/team.jpg' />
+                    <QuickCard title='Team Stats' link='/team' imgSrc='/team.jpg' />
                     <QuickCard title='Match Stats' link='/stats/match' imgSrc='/tournament.jpg' />
                 </div>
             </div>
