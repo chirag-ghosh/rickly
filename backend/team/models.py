@@ -35,13 +35,9 @@ class Tournament(models.Model):
     def trycomplete(self):
         f = 1
         for m in self.match_set.all():
-            if(m.date < timezone.now()):
-                m.generate()
-                m.save()
-            else:
-                f = 0
-        if(f):
-            self.completed = True
+            m.generate()
+            m.save()
+        self.completed = True
         return
 
 class Team(models.Model):
@@ -391,7 +387,7 @@ class Match(models.Model):
                     L.save()
             bt.team.save()
             wt.team.save()
-            self.generated = True
+            self.played = True
             
 class Playing11(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
