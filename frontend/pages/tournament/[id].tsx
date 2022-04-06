@@ -98,7 +98,7 @@ const Tournament = () => {
                 : (
                     <div>
                         <h3>Tournament matches not scheduled yet.</h3>
-                        <button className="button" onClick={() => createSchedule()}>Create Schedule</button>
+                        <button className="button" onClick={() => createSchedule()}>Play Matches</button>
                     </div>
                 )
             }
