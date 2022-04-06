@@ -91,14 +91,14 @@ const Tournament = () => {
                 : (
                     <div className="tournament-matches">
                         <h3>Match Schedule</h3>
-                        <button className="button" onClick={() => playTournament()}>Create Schedule</button>
+                        <button className="button" onClick={() => playTournament()}>Play Matches</button>
                         <Table data={data} columns={columns} />
                     </div>
                 )
                 : (
                     <div>
                         <h3>Tournament matches not scheduled yet.</h3>
-                        <button className="button" onClick={() => createSchedule()}>Play Matches</button>
+                        <button className="button" onClick={() => createSchedule()}>Create Schedule</button>
                     </div>
                 )
             }
