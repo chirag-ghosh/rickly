@@ -36,7 +36,7 @@ const Match = () => {
                         role: response.data.scoreline_set[1][i][0][1],
                         runs: response.data.scoreline_set[1][i+1][0],
                         balls: response.data.scoreline_set[1][i+1][1],
-                        out: response.data.scoreline_set[1][i+1][2] ? response.data.scoreline_set[0][i+1][3] : "Not Out"
+                        out: response.data.scoreline_set[1][i+1][2] ? response.data.scoreline_set[1][i+1][3] : "Not Out"
                     }
                     i2.push(playerData);
                 }
