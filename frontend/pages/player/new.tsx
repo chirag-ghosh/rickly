@@ -48,7 +48,7 @@ const NewPlayer = () => {
     const router = useRouter();
 
     const [name, setName] = useState<string>('');
-    const [phone, setPhone] = useState<number>();
+    const [phone, setPhone] = useState<number>(5);
     const [category, setCategory] = useState<Option>(PlayOptions[0]);
 
     const generateRandomPlayer = () => {
@@ -60,6 +60,10 @@ const NewPlayer = () => {
     }
 
     const generateManualPlayer = () => {
+        if(phone < 5) {
+            window.alert("Please enter an age greater than 5");
+            return;
+        }
         axios.post(`${BACKEND_URL}/players/`, {
             name: name,
             age: phone,
@@ -83,7 +87,7 @@ const NewPlayer = () => {
                 </div> */}
                 <div className="divided-block">
                     <input type='text' placeholder="Enter player name" onChange={(event) => setName(event.target.value)}></input>
-                    <input type='number' placeholder="Enter player age" onChange={(event) => setPhone(parseInt(event.target.value))}></input>
+                    <input type='number' min={5} placeholder="Enter player age" onChange={(event) => setPhone(parseInt(event.target.value))}></input>
                     <Select 
                         className="input-select" 
                         options={PlayOptions}
